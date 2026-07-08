@@ -4,7 +4,7 @@ local config = require("scope.config")
 local M = {}
 
 M.cache = {}
-M.last_tab = 0
+M.closing_tab = 0
 
 function M.on_tab_new_entered()
     vim.api.nvim_buf_set_option(0, "buflisted", true)
@@ -38,17 +38,23 @@ function M.on_tab_leave()
     for _, k in pairs(buf_nums) do
         vim.api.nvim_buf_set_option(k, "buflisted", false)
     end
-    M.last_tab = tab
+
     if config.hooks.post_tab_leave ~= nil then
         config.hooks.post_tab_leave()
     end
 end
 
-function M.on_tab_closed()
+function M.on_tab_closed_pre()
+    M.closing_tab = vim.api.nvim_get_current_tabpage()
+
     if config.hooks.pre_tab_close ~= nil then
         config.hooks.pre_tab_close()
     end
-    M.cache[M.last_tab] = nil
+end
+
+function M.on_tab_closed()
+    M.cache[M.closing_tab] = nil
+
     if config.hooks.post_tab_close ~= nil then
         config.hooks.post_tab_close()
     end

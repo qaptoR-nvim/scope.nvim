@@ -16,6 +16,10 @@ editing flow.
 
 ![scope](https://user-images.githubusercontent.com/30515389/156297097-08208d0f-9715-4fc4-8aa0-f5980c21173d.gif)
 
+## Neovim Version
+
+Supports Neovim version 0.12+
+
 ## 📦 Installation
 
 **Upgrade your Neovim tabs now with your favorite package manager!**
